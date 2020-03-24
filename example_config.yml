@@ -1,0 +1,15 @@
+input:
+  files:
+    - sshd_example.log
+
+events:
+  ssh_connection:
+    src: '^(?P<hostname>[\w.]+) sshd\[(\d+)\]: Connection from (\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (\d+)$'
+    dest: 'ssh_connection_event_template.json'
+    event_type: SSHConnectionEvent
+    channel_name: ssh_events
+  ssh_public_key_accepted:
+    src: '^([\w.]+) sshd\[(\d+)\]: Accepted publickey for (\w+) from (\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) port (\d+)$'
+    dest: 'ssh_publickey_accepted_event_template.json'
+    event_type: SSHPublicKeyAcceptedEvent
+    channel_name: ssh_events
